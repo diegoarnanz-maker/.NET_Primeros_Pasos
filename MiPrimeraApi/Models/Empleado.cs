@@ -12,7 +12,7 @@ namespace MiPrimeraApi.Models // 🔹 Equivale a: package MiPrimeraApi.models;
         // C# diferencia entre tipos por mayúscula/minúscula.
         // Le asignamos string.Empty para evitar el warning CS8618
         public string Nombre { get; set; } = string.Empty;
-        // tbn se podria asi public string? Nombre { get; set; }
+        // tbn se podria poner asi public string? Nombre { get; set; }
 
         // 🔸 Cargo del empleado (string no nulo)
         public string Cargo { get; set; } = string.Empty;

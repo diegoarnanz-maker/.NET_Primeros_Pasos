@@ -6,9 +6,11 @@ namespace MiPrimeraApi.Services
     // 🔸 Equivale a: @Service public class EmpleadoServiceImplMy8 implements IEmpleadoService
     public class EmpleadoServiceImplMSSql : IEmpleadoService
     {
+
+        //El _ delante de la variable indica que es privada (Buenas practicas en C#)
         private readonly IEmpleadoRepository _repo;
 
-        // 🔹 Equivalente a: @Autowired
+        // 🔹 Equivalente a: @Autowired. Vamos que hace falta constructor para inyectar
         public EmpleadoServiceImplMSSql(IEmpleadoRepository repo)
         {
             _repo = repo;

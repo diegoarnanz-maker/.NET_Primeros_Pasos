@@ -32,6 +32,7 @@ namespace MiPrimeraApi.Services
 
         // 🔸 public void delete(int id);
         // En Java eliminarías por ID
+        //No se recomienda poner void en C# en los métodos de servicios
         Task DeleteAsync(int id);
     }
 }
