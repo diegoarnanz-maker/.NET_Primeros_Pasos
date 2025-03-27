@@ -10,9 +10,9 @@ namespace TiendaApi.Configurations
 
         // Mapea la entidad Empleado como una tabla
         // Equivale a @Entity + @Table(name = "Productos") en Java
-        public DbSet<Producto> Productos { get; set; }
-        public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<LineaPedido> LineasPedido { get; set; }
+        public DbSet<Producto> Productos { get; set; } = null!;
+        public DbSet<Pedido> Pedidos { get; set; } = null!;
+        public DbSet<LineaPedido> LineasPedido { get; set; } = null!;
 
         // Método para configurar detalles del mapeo (como @Column en Java) 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

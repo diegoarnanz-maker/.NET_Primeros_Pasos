@@ -15,7 +15,7 @@ namespace TiendaApi.Models // 🔹 Como el package en Java
         // 🔸 [Required] = @NotNull / @NotEmpty
         [Required]
         [StringLength(100)] // 🔸 Limita longitud como @Column(length=100)
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = string.Empty;
 
         // 🔸 [Column(TypeName = "decimal(10,2)")] es como @Column(precision = 10, scale = 2)
         [Column(TypeName = "decimal(10,2)")]

@@ -24,13 +24,13 @@ namespace TiendaApi.Models
         public int IdPedido { get; set; }
 
         // 🔹 Relación muchos a uno (N:1) con Pedido
-        public Pedido Pedido { get; set; }
+        public Pedido Pedido { get; set; } = null!;
 
         // 🔹 Clave foránea hacia Producto
         [ForeignKey("Producto")]
         public int IdProducto { get; set; }
 
         // 🔹 Relación muchos a uno (N:1) con Producto
-        public Producto Producto { get; set; }
+        public Producto Producto { get; set; } = null!;
     }
 }
