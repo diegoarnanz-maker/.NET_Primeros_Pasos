@@ -4,71 +4,125 @@ using TiendaApi.Models;
 
 namespace TiendaApi.Repositories
 {
-    //Responsabilidad: acceder directamente a la base de datos mediante Entity Framework Core
+    // Responsabilidad: acceder directamente a la base de datos mediante Entity Framework Core
     public class ProductoRepositoryImpl : IProductoRepository
     {
-        // Inyección del DbContext
-        //EF Core lo utiliza para acceder a las tablas (DbSet<Producto>) y ejecutar las operaciones CRUD
-
-        // @Repository
-        // public interface ProductoRepository extends JpaRepository<Producto, Integer> { }
-
         private readonly AppDbContext _context;
 
         public ProductoRepositoryImpl(AppDbContext context)
         {
             _context = context;
         }
-        //
 
-        // Métodos CRUD
         public async Task<List<Producto>> GetAllAsync()
         {
-            return await _context.Productos.ToListAsync();
+            try
+            {
+                return await _context.Productos.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener todos los productos", ex);
+            }
         }
 
         public async Task<Producto?> GetByIdAsync(int id)
         {
-            return await _context.Productos.FindAsync(id);
+            if (id <= 0)
+                throw new ArgumentException("El ID debe ser mayor a 0", nameof(id));
+
+            try
+            {
+                return await _context.Productos.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener el producto con ID {id}", ex);
+            }
         }
 
-        // EF a diferencia que JPA no tiene un método save que sirva para insertar y actualizar
-        // En EF se debe usar Add para insertar y Update para actualizar
         public async Task<Producto> CreateAsync(Producto producto)
         {
-            _context.Productos.Add(producto);
-            await _context.SaveChangesAsync();
-            return producto;
+            if (producto == null)
+                throw new ArgumentNullException(nameof(producto), "El producto no puede ser nulo");
+
+            try
+            {
+                _context.Productos.Add(producto);
+                await _context.SaveChangesAsync();
+                return producto;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al crear el producto", ex);
+            }
         }
 
         public async Task<Producto> UpdateAsync(Producto producto)
         {
-            _context.Productos.Update(producto);
-            await _context.SaveChangesAsync();
-            return producto;
+            if (producto == null)
+                throw new ArgumentNullException(nameof(producto), "El producto no puede ser nulo");
+
+            try
+            {
+                _context.Productos.Update(producto);
+                await _context.SaveChangesAsync();
+                return producto;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar el producto", ex);
+            }
         }
 
         public async Task DeleteAsync(int id)
         {
-            var p = await _context.Productos.FindAsync(id);
-            if (p != null)
+            if (id <= 0)
+                throw new ArgumentException("El ID debe ser mayor que 0", nameof(id));
+
+            try
             {
-                _context.Productos.Remove(p);
+                Producto? producto = await _context.Productos.FindAsync(id);
+                if (producto == null)
+                    throw new InvalidOperationException($"No se encontró el producto con ID: {id}");
+
+                _context.Productos.Remove(producto);
                 await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al eliminar el producto con ID: {id}", ex);
             }
         }
 
         public async Task<int> CountAsync()
         {
-            return await _context.Productos.CountAsync();
+            try
+            {
+                return await _context.Productos.CountAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al contar los productos", ex);
+            }
         }
 
         public async Task<List<Producto>> GetPagedAsync(int page, int pageSize)
         {
-            return await _context.Productos
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            if (page <= 0 || pageSize <= 0)
+                throw new ArgumentException("La página y el tamaño deben ser mayores que 0");
+
+            try
+            {
+                return await _context.Productos
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener productos paginados", ex);
+            }
         }
     }
 }

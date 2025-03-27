@@ -23,6 +23,11 @@ namespace TiendaApi.Mappings
             CreateMap<Pedido, PedidoResponseDto>();
             CreateMap<PedidoRequestDto, Pedido>();
 
+            CreateMap<LineaPedido, LineaPedidoResponseDto>()
+                .ForMember(dest => dest.NombreProducto, opt => opt.MapFrom(src => src.Producto.Nombre));
+
+            CreateMap<Pedido, PedidoResponseDto>();
+
         }
     }
 }

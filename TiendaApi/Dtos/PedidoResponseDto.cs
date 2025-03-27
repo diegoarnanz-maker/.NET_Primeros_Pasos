@@ -5,5 +5,7 @@ namespace TiendaApi.Dtos
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
+        public List<LineaPedidoResponseDto> Lineas { get; set; } = new();
+
     }
 }

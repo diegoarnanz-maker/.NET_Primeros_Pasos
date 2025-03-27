@@ -1,3 +1,4 @@
+using TiendaApi.Dtos;
 using TiendaApi.Models;
 
 namespace TiendaApi.Services
@@ -6,7 +7,7 @@ namespace TiendaApi.Services
     {
         Task<List<Pedido>> GetAllAsync();
         Task<Pedido?> GetByIdAsync(int id);
-        Task<Pedido> CreateAsync(Pedido pedido);
+        Task<Pedido> CreateAsync(Pedido pedido, List<LineaPedidoRequestDto> lineas);
         Task<Pedido> UpdateAsync(int id, Pedido pedido);
         Task DeleteAsync(int id);
     }
